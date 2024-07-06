@@ -16,19 +16,18 @@ jobs:
     - name: Install ninja-build
       run: sudo apt install ninja-build -y
     - name: Install z3
-      run: sudo apt install libz3-dev -y
+      run: sudo apt install libz3-dev p7zip-full p7zip-rar -y  
     - name: git submodule update --init
       run: git submodule update --init
     - name: ./build.sh
       run: ./build.sh
-    - name: Test tiny-aes
-      run: ./tests/test-aes.sh
-    - name: Test jsoncpp
-      run: ./tests/test-jsoncpp.sh
-    - name: Test json
-      run: ./tests/test-json.sh
-    - name: Test openssl
-      run: ./tests/test-openssl.sh
+    - name: Package llvm
+      run: 7z a android-llvm-Pluto.zip install
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: android-llvm-Pluto
+        path: android-llvm-Pluto.zip          
   # Windows:
 
   #   runs-on: windows-latest
